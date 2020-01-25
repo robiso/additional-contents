@@ -37,7 +37,7 @@ $(function() {
 
 	$(".content_plus").click(function(){
 		var id = 'addition_content_'+$(this).attr('value');
-		var content = 'Empty content';
+		var content = "This is a new editable area. By default it's hidden.";
 		$.ajaxSetup({async: false});
 		$.post("",{
 			addac: id,
