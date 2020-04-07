@@ -51,7 +51,8 @@ function loadAdditionContentsEditableV2($contents) {
     $page = $Wcms->currentPage;
 
     if ($Wcms->loggedIn) {
-        if (isset($_POST['delac'])) {
+        $requestToken = $_POST['token'] ?? $_GET['token'] ?? null;
+        if (isset($_POST['delac']) && $Wcms->hashVerify($requestToken)) {
             $key = $_POST['delac'];
             if (getContentV2($key)!==false) {
             	$tempArray = explode('content_', $key);
@@ -74,7 +75,7 @@ function loadAdditionContentsEditableV2($contents) {
             }
             die;
         }
-        if (isset($_POST['addac'])) {
+        if (isset($_POST['addac']) && $Wcms->hashVerify($requestToken)) {
             $key = $_POST['addac'];
             $content = $_POST['content'];
             list($_, $k) = explode('content_', $key);
@@ -106,7 +107,7 @@ function loadAdditionContentsEditableV2($contents) {
         }
         $content = '<div id="contents"  class="addition_contents">'.$content;
         $content.='
-        <ul class="nav navbar-left"><li><i value="1" class="btn glyphicon glyphicon-plus-sign content_plus" data-toggle="tooltip" title="Add a content"></i></li></ul><br style="font-size: 1.1em;"/>';
+        <ul class="nav navbar-left"><li><i value="1" class="btn glyphicon glyphicon-plus-sign content_plus" data-toggle="tooltip" title="Add new editable area"></i></li></ul><br style="font-size: 1.1em;"/>';
         for ($i=1; $i!=0; $i++) {
             $addition_content = getContentV2('addition_content_'.$i);
             if (empty($addition_content)) {
@@ -120,13 +121,13 @@ function loadAdditionContentsEditableV2($contents) {
             <li>';
             if ($addition_content_show=='show') {
                 $content.='
-                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-open toolbar content_hide" data-toggle="tooltip" title="Hide content"></i>';
+                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-open toolbar content_hide" data-toggle="tooltip" title="Hide"></i>';
             } else {
                 $content.='
-                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-close toolbar content_show" data-toggle="tooltip" title="Show content"></i>';
+                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-close toolbar content_show" data-toggle="tooltip" title="Show"></i>';
             }
             $content.='
-            <i value="'.$i.'" class="btn glyphicon glyphicon-minus-sign toolbar content_delete" data-toggle="tooltip" title="Remove content"></i>
+            <i value="'.$i.'" class="btn glyphicon glyphicon-minus-sign toolbar content_delete" data-toggle="tooltip" title="Remove editable area"></i>
             </li>
             </ul>';
             $content.= '
