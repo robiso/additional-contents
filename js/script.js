@@ -29,6 +29,7 @@ $(function() {
 			$.ajaxSetup({async: false});
 			$.post("",{
 				delac: id,
+				token: token,
 			});
 			new Promise(resolve => setTimeout(resolve, 5000));
 			window.location.reload();
@@ -37,7 +38,7 @@ $(function() {
 
 	$(".content_plus").click(function(){
 		var id = 'addition_content_'+$(this).attr('value');
-		var content = "This is a new editable area. By default it's hidden.";
+		var content = "This is a new ediable area. By default it's hidden.";
 		$.ajaxSetup({async: false});
 		$.post("",{
 			addac: id,
