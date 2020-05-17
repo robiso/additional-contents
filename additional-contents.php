@@ -6,7 +6,6 @@
  *
  * @author Prakai Nadee <prakai@rmuti.acth> pre-fork: version 1.1.0
  * @forked by Robert Isoski @robiso
- * @version 3.0.0
  */
 
 global $Wcms;
@@ -107,7 +106,7 @@ function loadAdditionContentsEditableV2($contents) {
         }
         $content = '<div id="contents"  class="addition_contents">'.$content;
         $content.='
-        <ul class="nav navbar-left"><li><i value="1" class="btn glyphicon glyphicon-plus-sign content_plus" data-toggle="tooltip" title="Add new editable area"></i></li></ul><br style="font-size: 1.1em;"/>';
+        <br /><b value="1" class="content_plus btn btn-light btn-sm" data-toggle="tooltip" title="Add new editable area">Add new editable area</b><br style="font-size: 1.1em;"/>';
         for ($i=1; $i!=0; $i++) {
             $addition_content = getContentV2('addition_content_'.$i);
             if (empty($addition_content)) {
@@ -117,19 +116,17 @@ function loadAdditionContentsEditableV2($contents) {
             $addition_content_show = getContentV2('addition_content_show_'.$i);
             $addition_content_show = ($addition_content_show) ? $addition_content_show:'show';
             $content.='
-            <ul class="nav navbar-left addition_content">
-            <li>';
+            <div class="addition_content">';
             if ($addition_content_show=='show') {
                 $content.='
-                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-open toolbar content_hide" data-toggle="tooltip" title="Hide"></i>';
+                <br /><b value="'.$i.'" class="toolbar content_hide btn btn-secondary btn-sm" data-toggle="tooltip" title="Hide"> Hide editable area</b>';
             } else {
                 $content.='
-                <i value="'.$i.'" class="btn glyphicon glyphicon-eye-close toolbar content_show" data-toggle="tooltip" title="Show"></i>';
+                <br /><b value="'.$i.'" class="toolbar content_show btn btn-success btn-sm" data-toggle="tooltip" title="Show"> Show editable area to visitors</b>';
             }
             $content.='
-            <i value="'.$i.'" class="btn glyphicon glyphicon-minus-sign toolbar content_delete" data-toggle="tooltip" title="Remove editable area"></i>
-            </li>
-            </ul>';
+            <b value="'.$i.'" class="toolbar content_delete btn btn-danger btn-sm" data-toggle="tooltip" title="Remove editable area"> Remove</b>
+            </div>';
             $content.= '
             <hr />';
             $content.= $addition_content = $Wcms->editable('addition_content_'.$i, $addition_content, 'pages');
