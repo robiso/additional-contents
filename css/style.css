@@ -9,10 +9,9 @@
   border-top: 1px dashed #cfcfcf;
   height: 1px;
 }
-.addition_contents > ul > li > i.content_plus {
-    padding: 0px;
-    color: #339f41;
-    font-size: 1.1em;
+.addition_contents > ul > li > b.content_plus {
+    color: #ffffff;
+    margin: 1em;
 }
 .addition_content {
     position: relative;
@@ -31,4 +30,9 @@
 }
 .addition_content > li > i.content_delete {
     color: #9f4131;
+}
+
+ul > li > b
+ {
+  margin-top: 1em;
 }
