@@ -21,9 +21,9 @@ if (defined('VERSION')) {
 function loadAdditionContentsJS($args) {
     global $Wcms;
     if ($Wcms->loggedIn) {
-        $script = <<<'EOT'
+        $script = <<<EOT
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
-        <script src="plugins/additional-contents/js/script.js" type="text/javascript"></script>
+        <script src="{$Wcms->url('plugins/additional-contents/js/script.js')}" type="text/javascript"></script>
 EOT;
         $args[0].=$script;
     }
@@ -33,8 +33,8 @@ EOT;
 function loadAdditionContentsCSS($args) {
     global $Wcms;
     if ($Wcms->loggedIn) {
-        $script = <<<'EOT'
-        <link rel="stylesheet" href="plugins/additional-contents/css/style.css" type="text/css" media="screen" charset="utf-8">
+        $script = <<<EOT
+        <link rel="stylesheet" href="{$Wcms->url('plugins/additional-contents/css/style.css')}" type="text/css" media="screen" charset="utf-8">
 EOT;
         $args[0].=$script;
     }
