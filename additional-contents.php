@@ -6,6 +6,7 @@
  *
  * @author Prakai Nadee <prakai@rmuti.acth> pre-fork: version 1.1.0
  * @forked by Robert Isoski @robiso
+ * @version 3.0.0
  */
 
 global $Wcms;
@@ -21,6 +22,7 @@ function loadAdditionContentsJS($args) {
     global $Wcms;
     if ($Wcms->loggedIn) {
         $script = <<<'EOT'
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh" crossorigin="anonymous"></script>
         <script src="plugins/additional-contents/js/script.js" type="text/javascript"></script>
 EOT;
         $args[0].=$script;
@@ -106,7 +108,7 @@ function loadAdditionContentsEditableV2($contents) {
         }
         $content = '<div id="contents"  class="addition_contents">'.$content;
         $content.='
-        <br /><b value="1" class="content_plus btn btn-light btn-sm" data-toggle="tooltip" title="Add new editable area">Add new editable area</b><br style="font-size: 1.1em;"/>';
+        <br /><b style="cursor: pointer;" value="1" class="content_plus" data-toggle="tooltip" title="Add new editable area">+ Add new editable area</b><br style="font-size: 1.1em;"/>';
         for ($i=1; $i!=0; $i++) {
             $addition_content = getContentV2('addition_content_'.$i);
             if (empty($addition_content)) {
@@ -119,13 +121,13 @@ function loadAdditionContentsEditableV2($contents) {
             <div class="addition_content">';
             if ($addition_content_show=='show') {
                 $content.='
-                <br /><b value="'.$i.'" class="toolbar content_hide btn btn-secondary btn-sm" data-toggle="tooltip" title="Hide"> Hide editable area</b>';
+                <br /><b style="cursor:pointer" value="'.$i.'" class="toolbar content_hide" data-toggle="tooltip" title="Hide"> Hide editable area (currently visible)</b>';
             } else {
                 $content.='
-                <br /><b value="'.$i.'" class="toolbar content_show btn btn-success btn-sm" data-toggle="tooltip" title="Show"> Show editable area to visitors</b>';
+                <br /><b style="cursor:pointer" value="'.$i.'" class="toolbar content_show" data-toggle="tooltip" title="Show"> Show editable area to visitors (currently hidden)</b>';
             }
             $content.='
-            <b value="'.$i.'" class="toolbar content_delete btn btn-danger btn-sm" data-toggle="tooltip" title="Remove editable area"> Remove</b>
+            <b  style="cursor: pointer; float: right;" value="'.$i.'" class="toolbar content_delete" data-toggle="tooltip" title="Remove editable area"> Remove editable area</b>
             </div>';
             $content.= '
             <hr />';
