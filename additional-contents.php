@@ -58,8 +58,8 @@ function loadAdditionContentsEditableV2($contents) {
             if (getContentV2($key)!==false) {
             	$tempArray = explode('content_', $key);
                 $k = (int)end($tempArray);
-                $Wcms->unset($target, $page, 'addition_content_'.$k);
-                $Wcms->unset($target, $page, 'addition_content_show_'.$k);
+                $Wcms->deletePageKey($Wcms->currentPageTree, 'addition_content_'.$k);
+                $Wcms->deletePageKey($Wcms->currentPageTree, 'addition_content_show_'.$k);
 
                 for ($i=$k+1 ;$i!==0; $i++) {
                     $addition_content = getContentV2('addition_content_'.$i);
@@ -67,10 +67,10 @@ function loadAdditionContentsEditableV2($contents) {
                     if (empty($addition_content)) {
                         break;
                     }
-					$Wcms->unset($target, $page, 'addition_content_'.$i);
-					$Wcms->unset($target, $page, 'addition_content_show_'.$i);
-					$Wcms->set($target, $page, 'addition_content_'.$k, $addition_content);
-					$Wcms->set($target, $page, 'addition_content_show_'.$k, $addition_content_show);
+                    $Wcms->deletePageKey($Wcms->currentPageTree, 'addition_content_'.$i);
+                    $Wcms->deletePageKey($Wcms->currentPageTree, 'addition_content_show_'.$i);
+                    $Wcms->updatePage($Wcms->currentPageTree, 'addition_content_'.$k, $addition_content);
+                    $Wcms->updatePage($Wcms->currentPageTree, 'addition_content_show_'.$k, $addition_content_show);
                     $k++;
                 }
             }
@@ -87,9 +87,9 @@ function loadAdditionContentsEditableV2($contents) {
                     $addition_content = getContentV2('addition_content_'.$i);
                     $addition_content_show = (getContentV2('addition_content_show_'.$i)=='hide') ? 'hide':'show';
                     $key = 'addition_content_'.$i;
-                    $Wcms->set('pages', $Wcms->currentPage, $key, $bf_addition_content);
+                    $Wcms->updatePage($Wcms->currentPageTree, $key, $bf_addition_content);
                     $key = 'addition_content_show_'.$i;
-                    $Wcms->set('pages', $Wcms->currentPage, $key, $bf_addition_content_show);
+                    $Wcms->updatePage($Wcms->currentPageTree, $key, $bf_addition_content_show);
                     if (empty($addition_content)) {
                         break;
                     }
@@ -100,10 +100,10 @@ function loadAdditionContentsEditableV2($contents) {
             }
             $key = 'addition_content_1';
             $content = $_POST['content'];
-            $Wcms->set('pages', $Wcms->currentPage, $key, $content);
+            $Wcms->updatePage($Wcms->currentPageTree, $key, $content);
             $key = 'addition_content_show_1';
             $content = 'hide';
-            $Wcms->set('pages', $Wcms->currentPage, $key, $content);
+            $Wcms->updatePage($Wcms->currentPageTree, $key, $content);
             die;
         }
         $content = '<div id="contents"  class="addition_contents">'.$content;
@@ -153,6 +153,10 @@ function loadAdditionContentsEditableV2($contents) {
 
 function getContentV2($key, $page = false) {
     global $Wcms;
-    $segments = $Wcms->currentPageExists ? $Wcms->get('pages',$Wcms->currentPage) : ($Wcms->get('config','login') == $Wcms->currentPage ? (object) $Wcms->loginView() : (object) $Wcms->notFoundView());
-    return isset($segments->$key) ? $segments->$key : false;
+    $segments = $Wcms->currentPageExists
+        ? $Wcms->getCurrentPageData()
+        : ($Wcms->get('config','login') == $Wcms->currentPage
+            ? (object) $Wcms->loginView()
+            : (object) $Wcms->notFoundView());
+    return $segments->$key ?? false;
 }
