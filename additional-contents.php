@@ -58,7 +58,7 @@ function loadAdditionContentsEditableV2($contents) {
 
     if ($Wcms->loggedIn) {
         $requestToken = $_POST['token'] ?? $_GET['token'] ?? null;
-        if (isset($_POST['delac']) && $Wcms->hashVerify($requestToken)) {
+        if (isset($_POST['delac']) && is_string($requestToken) && $Wcms->hashVerify($requestToken)) {
             $key = $_POST['delac'];
             if (getContentV2($key)!==false) {
             	$tempArray = explode('content_', $key);
@@ -81,7 +81,7 @@ function loadAdditionContentsEditableV2($contents) {
             }
             die;
         }
-        if (isset($_POST['moveac']) && $Wcms->hashVerify($requestToken)) {
+        if (isset($_POST['moveac']) && is_string($requestToken) && $Wcms->hashVerify($requestToken)) {
             $k = (int)$_POST['moveac'];
             if ($k > 1 && !empty(getContentV2('addition_content_'.$k))) {
                 foreach (['addition_content_', 'addition_content_show_'] as $field) {
@@ -92,7 +92,7 @@ function loadAdditionContentsEditableV2($contents) {
             }
             die;
         }
-        if (isset($_POST['addac']) && $Wcms->hashVerify($requestToken)) {
+        if (isset($_POST['addac']) && is_string($requestToken) && $Wcms->hashVerify($requestToken)) {
             $key = $_POST['addac'];
             $content = $_POST['content'];
             list($_, $k) = explode('content_', $key);
