@@ -44,6 +44,11 @@ EOT;
 function loadAdditionContentsEditableV2($contents) {
     global $Wcms;
 
+    if ($contents[1]=='header') { // themes print it with $Wcms->page('header')
+        $header = (string)getContentV2('addition_header');
+        $contents[0] = $Wcms->loggedIn ? $Wcms->editable('addition_header', $header ?: 'Click here to add header content', 'pages') : $header;
+        return $contents;
+    }
     if ($contents[1]!='content') {
         return $contents;
     }
