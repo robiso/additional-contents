@@ -26,6 +26,13 @@ $(function() {
 			});
 			new Promise(resolve => setTimeout(resolve, 5000));
 			window.location.reload();
+		} else if($(this).hasClass("content_up")){
+			$.ajaxSetup({async: false});
+			$.post("",{
+				moveac: $(this).attr('value'),
+				token: token,
+			});
+			window.location.reload();
 		} else{
 			var id = 'addition_content_'+$(this).attr('value');
 			$.ajaxSetup({async: false});

@@ -81,6 +81,17 @@ function loadAdditionContentsEditableV2($contents) {
             }
             die;
         }
+        if (isset($_POST['moveac']) && $Wcms->hashVerify($requestToken)) {
+            $k = (int)$_POST['moveac'];
+            if ($k > 1 && !empty(getContentV2('addition_content_'.$k))) {
+                foreach (['addition_content_', 'addition_content_show_'] as $field) {
+                    $above = (string)getContentV2($field.($k-1));
+                    $Wcms->updatePage($Wcms->currentPageTree, $field.($k-1), (string)getContentV2($field.$k));
+                    $Wcms->updatePage($Wcms->currentPageTree, $field.$k, $above);
+                }
+            }
+            die;
+        }
         if (isset($_POST['addac']) && $Wcms->hashVerify($requestToken)) {
             $key = $_POST['addac'];
             $content = $_POST['content'];
@@ -130,6 +141,10 @@ function loadAdditionContentsEditableV2($contents) {
             } else {
                 $content.='
                 <br /><b style="cursor:pointer" value="'.$i.'" class="toolbar content_show" data-toggle="tooltip" title="Show"> Show editable area to visitors (currently hidden)</b>';
+            }
+            if ($i > 1) {
+                $content.='
+                <b style="cursor:pointer" value="'.$i.'" class="toolbar content_up" data-toggle="tooltip" title="Move up"> &nbsp; Move up</b>';
             }
             $content.='
             <b  style="cursor: pointer; float: right;" value="'.$i.'" class="toolbar content_delete" data-toggle="tooltip" title="Remove editable area"> Remove editable area</b>

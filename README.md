@@ -13,6 +13,7 @@ WonderCMS plugin for adding additional contents / new editable areas.
 3. Find plugin in the list and click "install".
 4. Plugin will be automatically activated.
 5. You can now see an additional "+" anywhere under editable areas. This feature enables you to add new editable areas.
+6. A new area is added at the top. To change the order, click "Move up" on an area: it swaps places with the area above it, with its content and its visible or hidden setting.
 
 ## Header area
 Each page can also have an editable header (hero) area. Add this line to your theme's `theme.php` where the header should appear, for example above `<?= $Wcms->page('content') ?>`:
